@@ -4,6 +4,7 @@ const total = document.getElementById('total');
 const tablaResultados = document.getElementById('tabla-resultados');
 const borrar = document.getElementById('borrar');
 const realizadas = document.getElementById('realizadas');
+const check = document.querySelectorAll('#check');
 
 const tareas = [];
 
@@ -21,23 +22,10 @@ agregar.addEventListener('click', () => {
             <th scope="row">${index + 1}</th>
             <td scope="row">${tarea}</td>
             <td scope="row"><input id="check" type="checkbox"></td>
-            <td scope="row"><button id="btnborrar" type="button">X</button></td>
+            <td scope="row"><i id="borrar" class="fa-solid fa-trash"></i></td>
             </tr>`;
-        })
+        });
+
         tablaResultados.innerHTML = html;
     }
-    let check = document.getElementById('check');
-    function checkAll() {
-        if (check.checked == true) {
-           /*  const tareaRealizada = realizadas.value;
-            realizadas.value = realizadas.value + 1 */
-            alert('Tarea Realizada');
-        }
-        checkAll();
-    }
 });
-
-
-
-
-

@@ -94,11 +94,9 @@
     font-size: 20px;
 }
 
-#btnborrar {
+#borrar {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    background-color: red;
-    border-radius: 5px;
-    color: white;
+    color: rgb(251, 5, 5);
 }
