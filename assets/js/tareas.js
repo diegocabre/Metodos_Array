@@ -2,9 +2,7 @@ const tarea = document.getElementById('tarea');
 const agregar = document.getElementById('agregar');
 const total = document.getElementById('total');
 const tablaResultados = document.getElementById('tabla-resultados');
-const borrar = document.getElementById('borrar');
 const realizadas = document.getElementById('realizadas');
-const check = document.querySelectorAll('#check');
 
 const tareas = [];
 
@@ -12,20 +10,48 @@ agregar.addEventListener('click', () => {
     if (tarea.value == null || tarea.value == '') {
         alert('Debe rellerar el campo con datos válidos');
     } else {
-        const nuevaTarea = tarea.value;
-        tareas.push(tarea.value);
+        tareas.push({
+            id: tareas.length + 1,
+            tarea: tarea.value,
+            checkbox: false
+        });
         tarea.value = '';
         total.innerText = tareas.length;
         let html = '';
         tareas.forEach((tarea, index) => {
             html += `<tr>
-            <th scope="row">${index + 1}</th>
-            <td scope="row">${tarea}</td>
-            <td scope="row"><input id="check" type="checkbox"></td>
-            <td scope="row"><i id="borrar" class="fa-solid fa-trash"></i></td>
+                <th scope="row">${tarea.id}</th>
+                <td>${tarea.tarea}</td>
+                <td><input type="checkbox" onclick="tareaRealizada(${index})"></td>
+                <td><i class="fas fa-trash-alt" onclick="borrar(${index})"></i></td>
             </tr>`;
         });
-
         tablaResultados.innerHTML = html;
     }
 });
+
+function tareaRealizada(index) {
+    if (tareas[index].checkbox == false) {
+        realizadas.innerText++;
+        tareas[index].checkbox = true;
+    } else {
+        realizadas.innerText--;
+        tareas[index].checkbox = false;
+    }
+}
+
+function borrar(index) {
+    tareas.splice(index, 1);
+    total.innerText = tareas.length;
+    realizadas.innerText = tareas.length;
+    html = '';
+    tareas.forEach((tarea, index) => {
+        html += `<tr>
+                <th scope="row">${tarea.id}</th>
+                <td>${tarea.tarea}</td>
+                <td><input type="checkbox" onclick="tareaRealizada(${index})"></td>
+                <td><i class="fas fa-trash-alt" onclick="borrar(${index})"></i></td>
+            </tr>`;
+    })
+    tablaResultados.innerHTML = html;
+}
