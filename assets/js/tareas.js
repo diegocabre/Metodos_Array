@@ -16,42 +16,28 @@ agregar.addEventListener('click', () => {
             checkbox: false
         });
         tarea.value = '';
-        total.innerText = tareas.length;
-        let html = '';
-        tareas.forEach((tarea, index) => {
-            html += `<tr>
-                <th scope="row">${tarea.id}</th>
-                <td>${tarea.tarea}</td>
-                <td><input type="checkbox" onclick="tareaRealizada(${index})"></td>
-                <td><i class="fas fa-trash-alt" onclick="borrar(${index})"></i></td>
-            </tr>`;
-        });
-        tablaResultados.innerHTML = html;
     }
+    renderizarTabla();
 });
-
-function tareaRealizada(index) {
-    if (tareas[index].checkbox == false) {
-        realizadas.innerText++;
-        tareas[index].checkbox = true;
-    } else {
-        realizadas.innerText--;
-        tareas[index].checkbox = false;
-    }
-}
 
 function borrar(index) {
     tareas.splice(index, 1);
+    renderizarTabla();
+}
+function renderizarTabla() {
     total.innerText = tareas.length;
-    realizadas.innerText = tareas.length;
-    html = '';
-    tareas.forEach((tarea, index) => {
-        html += `<tr>
-                <th scope="row">${tarea.id}</th>
-                <td>${tarea.tarea}</td>
-                <td><input type="checkbox" onclick="tareaRealizada(${index})"></td>
-                <td><i class="fas fa-trash-alt" onclick="borrar(${index})"></i></td>
-            </tr>`;
+    realizadas.innerText = tareas.filter(tarea => tarea.checkbox).length;
+    tablaResultados.innerHTML = tareas.map((tarea, index) => {
+        return `<tr>
+                    <th scope="row">${tarea.id}</th>
+                    <td>${tarea.tarea}</td>
+                    <td><input type="checkbox" ${tarea.checkbox ? 'checked' : ''} class="checkbox"  onclick="tareaRealizada(${index})"></td>
+                    <td><i class="fas fa-trash-alt" onclick="borrar(${index})"></i></td>
+                </tr>`
     })
-    tablaResultados.innerHTML = html;
+        .join('');
+}
+function tareaRealizada(index) {
+    tareas[index].checkbox = !tareas[index].checkbox;
+    renderizarTabla();
 }
