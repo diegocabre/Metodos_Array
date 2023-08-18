@@ -4,8 +4,7 @@ const total = document.getElementById('total');
 const tablaResultados = document.getElementById('tabla-resultados');
 const realizadas = document.getElementById('realizadas');
 
-const tareas = [];
-
+const tareas = [{ id: 1, tarea: 'Cocinar', checkbox: false }, { id: 2, tarea: 'Programar', checkbox: false }, { id: 3, tarea: 'Hacer ejercicio', checkbox: false }];
 agregar.addEventListener('click', () => {
     if (tarea.value == null || tarea.value == '') {
         alert('Debe rellerar el campo con datos válidos');
@@ -41,3 +40,4 @@ function tareaRealizada(index) {
     tareas[index].checkbox = !tareas[index].checkbox;
     renderizarTabla();
 }
+renderizarTabla();
